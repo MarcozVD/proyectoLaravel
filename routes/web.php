@@ -1,14 +1,19 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("welcome");
+
+Route::get('/inicio',[HomeController::class,"index"])->name("inicio");
 
 Route::get('/mi-nombre', function () {
-    return "marcos pro";
+    return view("nuevo");
 });
+
+Route::get('/mi-nombre/{apellido}', [HomeController::class,"name"]);
 
 
 Route::get('/contactanos', function () {
@@ -19,11 +24,14 @@ Route::get('/store', function (Request $request) {
 });
 
 
+
 Route::get('/php-basico', function () {
+    echo "soy marcos el crack <br>";
+    
 
     $name = "marcoz";
     echo "Hola $name, bienvenido a PHP básico";
-    $height = 1.75;
+    $height = 1.68;
     $islogin = true;
     $age = 30;
     echo "<H1 style = 'color: red;'>Tu altura es de $height metros</H1>";
@@ -34,7 +42,8 @@ Route::get('/php-basico', function () {
     $mensaje = "soy $name y tengo $age años. ". valadateAge($age);
 
     $mensaje .= $islogin ? " y estoy logueado" : " y no estoy logueado";  #if contraido
-    echo $mensaje;
+    echo $mensaje . "<br>";
+    echo gettype($mensaje);
 
     #crearemos una lista 
     $pc = [
@@ -55,12 +64,24 @@ Route::get('/php-basico', function () {
     foreach($listaProductos as $item){
         echo  "<br><br>" . $item['nombre'] . " <br><br>";
     }
+    for ($i=0;$i<=2;$i++){
+        echo $i;
+    }
+    foreach($pc as $carac){
+        echo "<br>" . $carac . " <br>";
+    }
 });
 
 function valadateAge($age) {
-if ($age >= 18) {
-        return "soy mayor de edad";
-    } else {
-        return "soy menor de edad";
+    return $age? "soy mayor de edad": "soy menor de edad";
+    }
+class persona{
+    public $name;
+    public $age;
+    function __construct($name,$age)
+    {
+        $this->$name=$name;
+        $this->$age =$age;
     }
 }
+$yo = new persona('marcos',20);
